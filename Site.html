@@ -116,7 +116,7 @@ function findxy(res, e) {
 }
 </script>
 <body onload="init()">
-    <canvas id="can" width="4500" height="2234" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+    <canvas id="can" width="4500" height="2234" style="position:absolute;top:10%;left:10%;"></canvas>
     <div style="position:absolute;top:1%;left:13%;">Choose Color</div>
     <div style="position:absolute;top:5%;left:15%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
     <div style="position:absolute;top:5%;left:16%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
@@ -127,20 +127,57 @@ function findxy(res, e) {
     <div style="position:absolute;top:1%;left:20%;">Eraser</div>
     <div style="position:absolute;top:5%;left:20%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
     <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-    <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:45%;left:2%;">
-    <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:2%;">
+    <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:1%;left:2%;">
+    <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:5%;left:2%;">
 
 
-	<img hidden id="myMap" src="public/map.gif"/>
+	<img hidden id="myMap" src="/Users/turnerstrayhorn/Turner/School/CS283/Project/csproject/public/map.gif"/>
 	
 <script>
+	
+	//this stuff loads the map image onto the whiteboard
     var c = document.getElementById("can");
     var ctx = c.getContext("2d");
     var img = document.getElementById("myMap");
     ctx.drawImage(img,0,0);
 
+
+	//for location of user
+	var x;
+	var y;
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x = position.coords.latitude;
+    y = position.coords.longitude;	
+}
+
+function transformPosition(){
+	
+}
+
+
+ctx.beginPath();
+ctx.arc(700,675,40,0,2*Math.PI);
+ctx.strokeStyle="#FF0000";
+ctx.stroke();
+
 </script>
+
 
 
 </body>
 </html>
+
+
+
+
+
+

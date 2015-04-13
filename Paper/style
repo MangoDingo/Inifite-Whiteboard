@@ -1,0 +1,14 @@
+
+#myCanvas{
+    border:solid black 2px;
+
+}
+
+style{
+    border: solid black 1px;
+
+}
+
+style:hover{
+		border: solid blue 1px;
+}
