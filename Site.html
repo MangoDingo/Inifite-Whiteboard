@@ -5,11 +5,22 @@
 
 <script type="text/javascript" src="js/paper-full.js"></script>
 	<script type="text/paperscript" canvas="myCanvas">
-
+        function initialize() {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function(){
+                if(http.responseText)
+                    paper.project.importJSON(http.responseText);
+            };
+            http.open("GET", window.location.href + "initialize", true);
+            http.setRequestHeader("Content-type", "application/json");
+            http.send(paper.project.exportJSON());
+           //TODO attach to subject 
+        }
+        initialize();
 		var path;
 
 
-		var strokeCol = 'black', strokeWid = 2;
+		var strokeCol = 'black', strokeWid = 4;
 
 
 		var textItem = new PointText({
@@ -42,6 +53,7 @@
 		function onMouseUp(event) {
 			var segmentCount = path.segments.length;
 			path.simplify(10);
+            notifyServer();
 		}
 
 
@@ -74,8 +86,8 @@
 
 	function color(obj) {
     switch (obj.id) {
-        case "green":
-            x = "green";
+        case 'green':
+            x = 'green';
             break;
         case "blue":
             x = "blue";
@@ -106,6 +118,19 @@
 		
 	}
 
+//functions to communicate with the server
+    function notifyServer(path){
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = callback;
+        http.open("POST", window.location.href + "notifyServer", true);
+    
+        http.setRequestHeader("Content-type", "application/json");
+        http.send(paper.project.exportJSON());
+        function callback() {
+            paper.project.importJSON(http.responseText);
+        }
+    }
+
 	</script>
 </head>
 <body>
@@ -129,15 +154,6 @@
   Y: <input type="int" name="y"><br>
 	<button type="button" id="enter" onclick="goto(x,y)">Enter</button>
 </form>
-
-<h1 style="
-	font-type:Times;
-    text-align: center;
-">
-	Whiteboard
-</h1>
-
-
 
 
 </body>
