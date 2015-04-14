@@ -1,12 +1,26 @@
 var express = require('express');
 var path = require('path');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 //paperjs project, has whole canvas on it
 var project;
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
+
+io.on('connection', function(socket){
+    console.log('client connected');
+    
+    socket.on('path update', function(path){
+        
+    });
+    
+    socket.on('disconnect', function(){
+        console.log('client disconnected');
+    });
+});
 
 app.get('/', function (req, res) {
     var p = path.resolve(__dirname + '/Site.html');
