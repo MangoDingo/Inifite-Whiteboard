@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link type="text/css" rel="stylesheet" href="/style.css"/>
 	<title>WhiteBoard</title>
 
 </head>
@@ -15,22 +16,21 @@
     >
 </canvas>
 
-<button type="button" id="black" onclick="colormeth.color(this)">Black</button>
-<button type="button" id="blue" onclick="colormeth.color(this)">Blue</button>
-<button type="button" id="red" onclick="colormeth.color(this)">Red</button>
-<button type="button" id="orange" onclick="colormeth.color(this)">Orange</button>
-<button type="button" id="white" onclick="colormeth.color(this)">White</button>
-<button type="button" id="yellow" onclick="colormeth.color(this)">Yellow</button>
-<button type="button" id="green" onclick="colormeth.color(this)">Green</button>
-<button type="button" id="eraser" onclick="colormeth.color(this)">Eraser</button>
+
+<div id="buttonWrapper">
+	<button type="button" id="black" onclick="colormeth.color(this)">Black</button>
+	<button type="button" id="blue" onclick="colormeth.color(this)">Blue</button>
+	<button type="button" id="red" onclick="colormeth.color(this)">Red</button>
+	<button type="button" id="orange" onclick="colormeth.color(this)">Orange</button>
+	<button type="button" id="white" onclick="colormeth.color(this)">White</button>
+	<button type="button" id="yellow" onclick="colormeth.color(this)">Yellow</button>
+	<button type="button" id="green" onclick="colormeth.color(this)">Green</button>
+	<button type="button" id="eraser" onclick="colormeth.color(this)">Eraser</button>
+
+</div>
 
 
-<form id="frm1" style="
-	font-family:Rockwell;
-	font-size: 20px
-    width: 80%;
-    margin: 0 auto;
-">
+<form id="frm1">
   X: <input type="int" name="xVar" id="xVar">
   Y: <input type="int" name="yVar" id="yVar">
 	<button type="button" id="enter" onclick="globals.goto()">Enter</button>
