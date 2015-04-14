@@ -3,25 +3,50 @@
 <head>
 	<title>WhiteBoard</title>
 
+</head>
+<body>
+	<canvas id="myCanvas" width=1600px height = 800px 
+	style="border: solid black 2px;    
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color:#F0F0F0;"
+    
+    >
+</canvas>
+
+<button type="button" id="black" onclick="colormeth.color(this)">Black</button>
+<button type="button" id="blue" onclick="colormeth.color(this)">Blue</button>
+<button type="button" id="red" onclick="colormeth.color(this)">Red</button>
+<button type="button" id="orange" onclick="colormeth.color(this)">Orange</button>
+<button type="button" id="white" onclick="colormeth.color(this)">White</button>
+<button type="button" id="yellow" onclick="colormeth.color(this)">Yellow</button>
+<button type="button" id="green" onclick="colormeth.color(this)">Green</button>
+<button type="button" id="eraser" onclick="colormeth.color(this)">Eraser</button>
+
+
+<form id="frm1" style="
+	font-family:Rockwell;
+	font-size: 20px
+    width: 80%;
+    margin: 0 auto;
+">
+  X: <input type="int" name="xVar" id="xVar">
+  Y: <input type="int" name="yVar" id="yVar">
+	<button type="button" id="enter" onclick="globals.goto()">Enter</button>
+</form>
+
+
 <script type="text/javascript" src="js/paper-full.js"></script>
+    
+<script src="/socket.io/socket.io.js"></script>
 	<script type="text/paperscript" canvas="myCanvas">
 
-
-        function initialize() {
-            var http = new XMLHttpRequest();
-            http.onreadystatechange = function(){
-                if(http.responseText)
-                    paper.project.importJSON(http.responseText);
-            };
-            http.open("GET", window.location.href + "initialize", true);
-            http.setRequestHeader("Content-type", "application/json");
-            http.send(paper.project.exportJSON());
-           //TODO attach to subject 
-        }
-        initialize();
-
         //Initializing variables
-		var path;
+        //networking variable
+        var socket = io();
+
+        var path;
 		var eraserSelected = false;
 
 		var strokeCol = 'black', strokeWid = 4, centerX = 0, centerY = 0;
@@ -58,6 +83,7 @@
 		// at the position of the mouse:
 		function onMouseDrag(event) {
 			path.add(event.point);
+            emitPath(path);
 		}
 
 
@@ -128,6 +154,19 @@ window.colormeth = {
 	}
 };
 
+//NETWORKING FUNCTIONS
+  function initialize() {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function(){
+                if(http.responseText)
+                    paper.project.importJSON(http.responseText);
+            };
+            http.open("GET", window.location.href + "initialize", true);
+            http.setRequestHeader("Content-type", "application/json");
+            http.send(paper.project.exportJSON());
+           //TODO attach to subject 
+        }
+        initialize();
 //functions to communicate with the server
     function notifyServer(path){
         var http = new XMLHttpRequest();
@@ -139,46 +178,13 @@ window.colormeth = {
         function callback() {
             paper.project.importJSON(http.responseText);
         }
-    }
+    };
+//when drawing, emit the path
+function emitPath(path){
+    socket.emit('path update', path.exportJSON());
+}
 
-
-
-
-	</script>
-</head>
-<body>
-	<canvas id="myCanvas" width=1600px height = 800px 
-	style="border: solid black 2px;    
-	margin-left: auto;
-    margin-right: auto;
-    display: block;
-    background-color:#F0F0F0;"
-    
-    >
-</canvas>
-
-<button type="button" id="black" onclick="colormeth.color(this)">Black</button>
-<button type="button" id="blue" onclick="colormeth.color(this)">Blue</button>
-<button type="button" id="red" onclick="colormeth.color(this)">Red</button>
-<button type="button" id="orange" onclick="colormeth.color(this)">Orange</button>
-<button type="button" id="white" onclick="colormeth.color(this)">White</button>
-<button type="button" id="yellow" onclick="colormeth.color(this)">Yellow</button>
-<button type="button" id="green" onclick="colormeth.color(this)">Green</button>
-<button type="button" id="eraser" onclick="colormeth.color(this)">Eraser</button>
-
-
-<form id="frm1" style="
-	font-family:Rockwell;
-	font-size: 20px
-    width: 80%;
-    margin: 0 auto;
-">
-  X: <input type="int" name="xVar" id="xVar">
-  Y: <input type="int" name="yVar" id="yVar">
-	<button type="button" id="enter" onclick="globals.goto()">Enter</button>
-</form>
-
-
+</script>
 </body>
 
 </html>
