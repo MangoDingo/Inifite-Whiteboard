@@ -23,6 +23,7 @@
         //Initializing variables
 		var path;
 		var eraserSelected = false;
+		var xy = globals.getUrlVars();
 
 		var strokeCol = 'black', strokeWid = 4, centerX = 0, centerY = 0;
 
@@ -112,6 +113,21 @@ window.globals = {
 		centerX = xVar;
 		centerY = yVar;
 	}
+
+	getUrlVars: function(){
+
+	    var vars = [], hash;
+	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	        hash = hashes[i].split('=');
+	        vars.push(hash[0]);
+	        vars[hash[0]] = hash[1];
+	    }
+	    alert (vars.top());
+	    return vars;
+	}
+
 };
 
 window.colormeth = {
@@ -153,7 +169,7 @@ window.colormeth = {
     margin-right: auto;
     display: block;
     background-color:#F0F0F0;"
-    
+
     >
 </canvas>
 
