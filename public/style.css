@@ -1,36 +1,103 @@
 #frm1{
 	background-color: #ffffff;
-
-	font-family: cursive;
-	font-size: 25px;
+	font-family: Rockwell;
+	font-size: 20px;
     margin-left: 0%;
     margin-right: auto;
-    width:350px;
+    margin-top: 500px;
+    width:80px;
+    text-align: center;
+    float:left;
+    margin-top: 5px;
+    margin-left: 10px;
+
+    border: solid black 1px;
 
 }
 
+#sideWrapper{
+    
+}
 
-button{
-    border:.1em solid #000000;
-    border-radius: 10px;
-	background-color: #ffffff;
-    height: 30px;
-    width: 60px;
-	font-size: 15px;
-    text-align: center;
-
-    font-family:cursive;
-    color:#000000;
-    box-shadow: 5px 5px 2.5px #888888;
-
-
-
+#xVar, #yVar{
+    border: solid black 1px;
+    height: 20px;
+    border-radius: 2px;
+    font-family: Rockwell;
+    font-size: 17px;
+    width:40px;
 }
 
 #buttonWrapper{
-	margin-left: 35%;
-	margin-right: auto;
-    width: 600px;
+    margin-left: 10px;
+    float: left;
+    width: 80px;
     
 
 }
+
+button{
+    margin-top: 5px;
+    border:.1em solid #000000;
+    border-radius: 10px;
+    background-color: #ffffff;
+    height: 40px;
+    width: 65px;
+    font-size: 15px;
+    text-align: center;
+    font-family:Rockwell;
+    color:#000000;
+    box-shadow: 2px 2px 1px #888888;
+
+}
+
+button:hover{
+            border-radius: 3px;
+            -webkit-transition: all 100ms ease-in-out;
+            transition: all 100ms ease-in-out;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+            display: inline-block;
+            padding: 8px 16px;
+            border: 0;
+            cursor: pointer;
+            background-color: #3dc476;
+            box-shadow: 0 2px 0 0 #3bb26b
+        }
+
+
+
+
+
+#myCanvas{
+    float:right;
+    border: solid black 2px; 
+    border-radius: 5px;   
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color:#F0F0F0;"
+}
+
+
+#red{
+    background-color: red;
+    color:black;
+}
+
+#orange{
+    background-color: orange;
+    color:black;
+}
+#yellow{
+    background-color: yellow;
+    color:black;
+}
+#green{
+    background-color: green;
+    color:white;
+}
+
