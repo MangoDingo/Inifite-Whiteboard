@@ -44,8 +44,6 @@
 	<script type="text/paperscript" canvas="myCanvas">
 
         //Initializing variables
-        //networking variable
-       // var socket = io();
         var path;
 		var eraserSelected = false;
 		//var xy = globals.getUrlVars();
@@ -77,6 +75,7 @@
 				strokeColor: strokeCol,
 				strokeWidth: strokeWid,
 			});
+            path.add(event.point);
 		}
 
 
@@ -84,17 +83,31 @@
 		// at the position of the mouse:
 		function onMouseDrag(event) {
 			path.add(event.point);
-          //  emitPath(path);
+            if(!timerActive){
+                sendPathTimer = setInterval(function(){
+                    socket.emit('path update', path.exportJSON());
+                    paper.view.draw();
+                    path = new Path({
+				        segments: [event.point],
+				        strokeColor: strokeCol,
+				        strokeWidth: strokeWid,
+			         });
+                },100);
+            }
+            timerActive = true;
 		}
 
 
 		// When the mouse is released, we simplify the path:
 		function onMouseUp(event) {
-			var segmentCount = path.segments.length;
 			if(!eraserSelected){
 				path.simplify(10);
 			}
-            notifyServer();
+            socket.emit('path update', path.exportJSON());
+            paper.view.draw();
+            
+            clearInterval(sendPathTimer);
+            timerActive = false;
 		}
 
 
@@ -153,33 +166,26 @@ window.colormeth = {
 	}
 };
 
-
-//NETWORKING FUNCTIONS
-  function initialize() {
-            var http = new XMLHttpRequest();
-            http.onreadystatechange = function(){
-                if(http.responseText)
-                    paper.project.importJSON(http.responseText);
-            };
-            http.open("GET", window.location.href + "initialize", true);
-            http.setRequestHeader("Content-type", "application/json");
-            http.send(paper.project.exportJSON());
-           //TODO attach to subject 
-        }
-        initialize();
-//functions to communicate with the server
-    function notifyServer(){
-        var http = new XMLHttpRequest();
-        http.onreadystatechange = function(){
-      //      paper.project.importJSON(http.responseText);
-        }
-        
-        http.open("POST", window.location.href + "notifyServer", true);
+    //whether or not the sendPathTimer should be running
+    var timerActive = false;
+    //a function that will run every 100 ms that a mouse is dragged
+    var sendPathTimer;
     
-        http.setRequestHeader("Content-type", "application/json");
-        http.send(paper.project.exportJSON());
-    }
-//TODO emit path with socketio
+    var socket = io();
+    
+    //get initialization from socket
+    socket.on('initialization', function(layer){
+        paper.project.layers[0].importJSON(layer);
+        paper.project.layers[0].activate();
+        paper.view.draw();
+    });
+    
+    //receive new path from socket
+    socket.on('path update', function(path){
+        var newPath = new Path();
+        newPath.importJSON(path);
+        paper.view.draw();
+    });
 
 </script>
 
