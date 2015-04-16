@@ -30,10 +30,8 @@ io.on('connection', function(socket){
         console.log('client initialized');
     }
     
-    //get a new path from a client
-    socket.on('path update', function(path){ 
+    socket.on('path update', function(path){
         console.log('PATH UPDATE');
-        //tell all the other clients about the path
         socket.broadcast.emit('path update', path);
         updateServerCanvas(path);
     });
