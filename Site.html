@@ -250,7 +250,6 @@
     socket.on('initialization', function(layer){
         paper.project.layers[0].importJSON(layer);
         paper.project.layers[0].activate();
-        paper.view.draw();
 		
 		var textItem = new PointText({
 			content: 'Click and Drag to Draw. Use Arrow Keys to Scroll.',
@@ -258,6 +257,7 @@
 			fillColor: 'black',
 			fontSize: 20,
 		});
+        paper.view.draw();
 
 
     });
