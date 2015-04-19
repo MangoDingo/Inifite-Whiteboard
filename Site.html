@@ -45,7 +45,7 @@
 
 		var textItem = new PointText({
 			content: 'Loading',
-			point: new Point(600, 400),
+			point: new Point(700, 400),
 			fillColor: 'black',
 			fontSize: 20,
 		});
@@ -107,6 +107,9 @@
 			path.add(event.point);
             if(!timerActive){
                 sendPathTimer = setInterval(function(){
+		    if(!eraserSelected){
+                              path.simplify(50);
+                    }
                     socket.emit('path update', path.exportJSON());
                     paper.view.draw();
                     path = new Path({

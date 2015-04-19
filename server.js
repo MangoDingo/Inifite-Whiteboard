@@ -49,8 +49,9 @@ function updateServerCanvas(path){
 
 var CronJob = require('cron').CronJob;
 var job = new CronJob({
-  cronTime: '00 33 15 * * 1-7',
+  cronTime: '00 00 00 * * 1-7',
   onTick: function() {
+     project.clear();
      project.layers[0] = new paper.Layer();
      project.layers[0].activate();
   },
