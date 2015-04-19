@@ -33,7 +33,7 @@ io.on('connection', function(socket){
     socket.on('path update', function(path){
         console.log('PATH UPDATE');
         socket.broadcast.emit('path update', path);
-       // updateServerCanvas(path);
+        updateServerCanvas(path);
     });
     
     socket.on('disconnect', function(){
