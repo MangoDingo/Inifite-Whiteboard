@@ -59,6 +59,14 @@
 		xLoc = getUrlParameter('x');
 		yLoc = getUrlParameter('y');
 
+		if(isNaN(xLoc)){
+			xLoc = 0;
+		}
+		if(isNaN(yLoc)){
+			yLoc = 0;
+		}
+
+
 		move(xLoc, yLoc);
 
 		var strokeCol = 'black', strokeWid = 4, centerX = 0, centerY = 0;
