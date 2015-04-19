@@ -46,3 +46,15 @@ function updateServerCanvas(path){
     newPath.importJSON(path);
     var test = project.layers[0].addChild(newPath);
 }
+
+var CronJob = require('cron').CronJob;
+var job = new CronJob({
+  cronTime: '00 33 15 * * 1-7',
+  onTick: function() {
+     project.layers[0] = new paper.Layer();
+     project.layers[0].activate();
+  },
+  start: false,
+  timeZone: 'America/Los_Angeles'
+});
+job.start();
