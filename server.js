@@ -40,9 +40,9 @@ io.on('connection', function(socket){
         console.log('client disconnected');
     });
 });
-/*
+
 function updateServerCanvas(path){
     var newPath = new paper.Path();
     newPath.importJSON(path);
     var test = project.layers[0].addChild(newPath);
-}*/
+}
